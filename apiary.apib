@@ -1,80 +1,140 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://department-info.herokuapp.com
 
-# Department_info_doc
+# Department Info
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+department_info is a simple API allowing users to interact with students information.
 
-## Questions Collection [/questions]
+### Allowed HTTPs requests:
+<pre>
+POST    : To create resource 
+PUT     : Update resource
+GET     : Get a resource or list of resources
+DELETE  : To delete resource
+</pre>
 
-### List All Questions [GET]
+### Description Of Usual Server Responses:
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 404 `Not Found` - resource was not found.
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+
+# Students
+Represents student details. 
+
+---
+**User attributes:**
+
+- id `(Number)` : unique identifier. 
+- name `(String)` : Name of the user.
+- session `(String)` : Session. 
+- age `(Integer)` : Age.
+- passion `(String)` : Passion for a spacific field.
+---
+
+## Students Informations : [/Students/]
+---
+
+### Get all students[GET]
 
 + Response 200 (application/json)
 
-        [
+         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
+                "_id": "5cbc5ea01c9d440000e782fb",
+                "name": "Nadim Mahmud",
+                "session": "2016-2017",
+                "age": 50,
+                "passion": "programming"
+            },
+            {
+                "_id": "5cbc9fc71c9d44000096f6e0",
+                "name": "Farhan Shahoriar",
+                "session": "2016-2017",
+                "age": 51,
+                "passion": "programming"
+            },
         ]
 
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Add new student [POST]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "name": "Nadim Mahmud",
+            "session": "2016-2017",
+            "age": 50,
+            "passion": "programming"
         }
+
 
 + Response 201 (application/json)
 
     + Headers
 
-            Location: /questions/2
+            Location: /Students/id
 
     + Body
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+            {   
+                "_id": "5cbc5ea01c9d440000e782fb",
+                "name": "Nadim Mahmud",
+                "session": "2016-2017",
+                "age": 50,
+                "passion": "programming"
             }
+            
+## Access students Informations by id : [/Students/{id}]
+
+---
+
+### Get a spacific student data [GET]
+
+
++ Parameters
+    + id (number) - ID of the User in the form of a string
+
++ Response 200 (application/json)
+    
+        {
+            "_id": "5cbc5ea01c9d440000e782fb",
+            "name": "Nadim Mahmud",
+            "session": "2016-2017",
+            "age": 50,
+            "passion": "programming"
+        }
+ 
+
+### Delete  a spacific student data [DELETE]
+
+
++ Parameters
+    + id (number) - ID of the User in the form of a string
+
++ Response 200
+
+### Update a spacific student data [PUT]
+
++ Parameters
+    + id (number) - ID of the User in the form of a string
+
++ Request (application/json)
+
+        {
+            "name": "Nadim Mahmud",
+            "session": "2016-2017",
+            "age": 50,
+            "passion": "programming"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "_id": "5cbc5ea01c9d440000e782fb",
+            "name": "Nadim Mahmud",
+            "session": "2016-2017",
+            "age": 50,
+            "passion": "programming"
+        }
